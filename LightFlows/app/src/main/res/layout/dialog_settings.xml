@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <EditText
+        android:id="@+id/cameraIndex"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="摄像头索引 (int)"
+        android:inputType="number"/>
+
+    <EditText
+        android:id="@+id/keycode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="键码 (int)"
+        android:inputType="number"/>
+     <EditText
+        android:id="@+id/fps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="帧率（超过最大自动最大）"
+        android:inputType="number"/>
+     <EditText
+        android:id="@+id/dy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="y偏移容错"
+        android:inputType="number"/>
+    <EditText
+        android:id="@+id/templateWidth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="模板宽度 (int)＜65"
+        android:inputType="number"/>
+
+    <EditText
+        android:id="@+id/threshold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="阈值 (int)＜65-模板宽度"
+        android:inputType="number"/>
+      <EditText
+        android:id="@+id/matchdegree"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="匹配度*100"
+        android:inputType="number"/>
+    
+    <EditText
+        android:id="@+id/ifleft"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="是否左手模式 (boolean)"
+        android:inputType="text"/>
+    
+    <EditText
+        android:id="@+id/filepath"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="扫描图输出路径 (String)"
+        android:inputType="text"/>
+    <EditText
+        android:id="@+id/ocrapi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="识别接口:讯飞填1,有道免费接口填2,有道付费填0"
+        android:inputType="number"/>
+
+</LinearLayout>

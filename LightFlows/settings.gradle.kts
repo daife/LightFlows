@@ -14,6 +14,6 @@ dependencyResolutionManagement {
   }
 }
 
-rootProject.name = "roughdict"
+rootProject.name = "LightFlows"
 
 include(":app")

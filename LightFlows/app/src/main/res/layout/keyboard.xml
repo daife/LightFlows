@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp">
+
+
+    <Keyboard
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:keyHeight="100dp"
+        android:keyWidth="100dp"
+        android:imeOptions="flagNoExtractUi|flagNoFullscreen">
+<Row
+         android:layout_height="100dp"
+         android:layout_width="match_parent">
+            <Key
+         android:layout_height="100dp"
+         android:layout_width="100dp"
+         android:codes="8"
+         android:keyLabel="○"
+         android:keyEdgeFlags="right"/>
+            <Key
+         android:layout_height="100dp"
+         android:layout_width="100dp"
+         android:codes="7"
+         android:keyLabel="Au⌧"
+         android:isSticky="true"/>
+            <Key
+         android:layout_height="100dp"
+         android:layout_width="100dp"
+         android:codes="9"
+         android:keyLabel="Au↲"
+         android:isSticky="true"/>
+
+        <Key
+             android:layout_height="100dp"
+             android:layout_width="100dp"
+             android:codes="1"
+             android:keyLabel="◁" />
+
+        <Key
+             android:layout_height="100dp"
+             android:layout_width="100dp"
+             android:codes="2"
+             android:keyLabel="▷" />
+
+        <Key
+             android:layout_height="100dp"
+             android:layout_width="100dp"
+             android:codes="6"
+             android:keyLabel=" " />
+
+        <Key
+             android:layout_height="100dp"
+             android:layout_width="100dp"
+             android:codes="3"
+             android:keyLabel="⌫" />
+
+        <Key
+             android:layout_height="100dp"
+             android:layout_width="100dp"
+             android:codes="4"
+             android:keyLabel="⌧" />
+
+        <Key
+             android:layout_height="100dp"
+             android:layout_width="100dp"
+             android:codes="5"
+             android:keyLabel="✔" />
+            
+
+    <!-- Color Changeable Key with code 8 -->
+    
+
+    </Row>
+        <!-- Keyboard Rows and Keys go here -->
+        <!-- ... -->
+
+    </Keyboard>
+</RelativeLayout>
