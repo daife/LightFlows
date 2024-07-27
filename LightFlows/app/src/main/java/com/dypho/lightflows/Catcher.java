@@ -202,7 +202,7 @@ public class Catcher {
 
                                 GaussianBlur(dstmat, dstmat, new Size(3, 3), 0); // 使用高斯滤波器
 
-                                threshold(dstmat, dstmat, 0, 255, THRESH_OTSU);
+                                //threshold(dstmat, dstmat, 0, 255, THRESH_OTSU);
 
                                 if (backGround == null || isbackGroundempty) {
                                     // backGround = new Mat(100, 4000, CV_8UC1, new Scalar(255));
