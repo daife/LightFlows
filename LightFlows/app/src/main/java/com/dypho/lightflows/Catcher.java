@@ -213,7 +213,7 @@ public class Catcher {
                                 } else {
                                     // 将此处提交到单线程处理器执行
                                     // 注意要换成最终变量被单线程执行器捕获
-                                    /*Runnable finalTask =
+                                    Runnable finalTask =
                                             () -> {
                                                 Point point = matchTemplateAndReturn(dstmat, templ);
                                                 if (point.x() < imgWidth - templateWidth
@@ -245,40 +245,7 @@ public class Catcher {
                                                 }
                                             };
                                     singleThreadExecutor.submit(finalTask);
-                                }*/
-                                    Runnable finalTask =
-            () -> {
-                Point point = matchTemplateAndReturn(dstmat, templ);
-                if (point.x() < imgWidth - templateWidth && point.x() > threshold) {
-
-                    nowRoi.x(nowRoi.x() - point.x());
-
-                    // 创建一个用于融合的权重图
-                    Mat weightMat = Mat.zeros(dstmat.rows(), templateWidth, CV_32F);
-                    // 在权重图上创建一个从0到1的渐变
-                    for (int i = 0; i < templateWidth; i++) {
-                        weightMat.put(0, i, 1.0 * i / templateWidth);
-                    }
-
-                    // 将权重图复制到对应的高度
-                    Mat weightMatFull = new Mat();
-                    Core.repeat(weightMat, dstmat.rows(), 1, weightMatFull);
-
-                    // 融合图像
-                    Mat leftPart = backGround.apply(new Rect(0, 0, nowRoi.x() + point.x() + templateWidth, 50));
-                    Mat rightPart = dstmat.apply(new Rect(point.x() + templateWidth, 0, imgWidth - point.x() - templateWidth, 50));
-                    Mat blendedPart = new Mat();
-                    Core.addWeighted(leftPart, 1.0 - weightMatFull, rightPart, weightMatFull, 0.0, blendedPart);
-
-                    // 将融合后的部分复制回背景图像
-                    blendedPart.copyTo(backGround.apply(new Rect(nowRoi.x(), 0, blendedPart.cols(), blendedPart.rows())));
-
-                    templ = dstmat.apply(roi).clone();
-                    nowRoi.x(nowRoi.x() + imgWidth - templateWidth);
-                }
-            };
-    singleThreadExecutor.submit(finalTask);
-}
+                                }
                             }
                         }.start();
 
