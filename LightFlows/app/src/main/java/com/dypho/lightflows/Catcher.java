@@ -36,7 +36,7 @@ public class Catcher {
     private static Mat perspective; // = mgetMatrix(54,13,176,6,176,138,54,131);
     private static Rect roi;
     private static Mat templ;
-    private static Point nowRoi = new Point(imgWidth - templateWidth, 0);
+    private static Point nowPoint = new Point(imgWidth - templateWidth, 0);
     public static Mat backGround;
     private static Camera.Parameters p;
     private static byte[] mPreviewData = new byte[176 * 144 * 3 / 2];
@@ -51,7 +51,7 @@ public class Catcher {
 
     public static void init() {
         roi = new Rect(imgWidth - templateWidth, dy, templateWidth, 50-dy);
-        nowRoi = new Point(imgWidth - templateWidth, 0);
+        nowPoint = new Point(imgWidth - templateWidth, 0);
         // dstmat = new Mat(144, 176, CV_8UC3);//多线程所需
         // mat = new Mat();//多线程所需
         perspective = mgetMatrix(54, 13, 176, 6, 176, 138, 54, 131);
@@ -80,7 +80,7 @@ public class Catcher {
         shouldprocess = false;
         isbackGroundempty = true;
         isTorch = false;
-        nowRoi = new Point(imgWidth - templateWidth, 0);
+        nowPoint = new Point(imgWidth - templateWidth, 0);
         FastInputIME.couldCatch = true;
     }
 
@@ -219,16 +219,46 @@ public class Catcher {
                                                 if (point.x() < imgWidth - templateWidth
                                                         && point.x() > threshold) {
 
-                                                    nowRoi.x(nowRoi.x() - point.x());
+                                                    nowPoint.x(nowPoint.x() - point.x());//配准后，后图左边缘在backGround的位置
+                                    Mat crossRrea = new Mat();
+                                    addWeighted(
+                                        backGround.apply(
+                                                                    new Rect(
+                                                                            nowPoint.x()
+                                                                                    + point.x(),
+                                                                            0,
+                                                                            templateWidth,//backGroud中的模板左边缘至右边缘
+                                                                            50)),
+                                        0.5,
+                                         dstmat.apply(
+                                                                    new Rect(
+                                                                            point.x(),
+                                                                            0,
+                                                                            templateWidth,//模板左边缘至右边缘
+                                                                            50)),
+                                        0.5,
+                                        0.0,//这是干嘛的?
+                                        crossRrea
+                                        );
+                                    hconcat(
+                                                            backGround.apply(
+                                                                    new Rect(
+                                                                            0,
+                                                                            0,
+                                                                            nowPoint.x()
+                                                                                    + point.x(),//模板左边缘，这不是脱裤子放屁...现在是除了模板backGround左边部分
+                                                                            50)),
+                                                            crossRrea,
+                                                            backGround);
 
                                                     hconcat(
                                                             backGround.apply(
                                                                     new Rect(
                                                                             0,
                                                                             0,
-                                                                            nowRoi.x()
-                                                                                    + point.x()
-                                                                                    + templateWidth,
+                                                                            nowPoint.x()
+                                                                                    + point.x()//模板左边缘，这不是脱裤子放屁...
+                                                                                    + templateWidth,//加上这个就是整个backGround原图，好像又有点脱裤子放屁的感觉...
                                                                             50)),
                                                             dstmat.apply(
                                                                     new Rect(
@@ -237,11 +267,11 @@ public class Catcher {
                                                                             0,
                                                                             imgWidth
                                                                                     - point.x()
-                                                                                    - templateWidth,
+                                                                                    - templateWidth,//注意rect构造不是左上右下点，而是左上点坐标,宽,高
                                                                             50)),
                                                             backGround);
                                                     templ = dstmat.apply(roi).clone();
-                                                    nowRoi.x(nowRoi.x() + imgWidth - templateWidth);
+                                                    nowPoint.x(nowPoint.x() + imgWidth - templateWidth);
                                                 }
                                             };
                                     singleThreadExecutor.submit(finalTask);
@@ -261,7 +291,7 @@ public class Catcher {
                         // 记得关闭执行器
                         Runnable finalTask =
                                 () -> {
-                                    nowRoi = new Point(imgWidth - templateWidth, 0);
+                                    nowPoint = new Point(imgWidth - templateWidth, 0);
                                     backGroundProcess();
                                 };
                         singleThreadExecutor.submit(finalTask);
